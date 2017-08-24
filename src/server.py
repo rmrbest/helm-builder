@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
-
-from src.services import QueueService
+from src.services.QueueService import QueueService
+from src.services.provider.RabbitMQStrategy import RabbitMQStrategy
 
 app = Flask(__name__)
+service = QueueService(RabbitMQStrategy())
 
 @app.route('/api/build', methods=['POST'])
 def build():
-    queueService = QueueService
-    queueService.produce()
     return (jsonify({'username': 'OK'}), 201)
 
 
